@@ -61,8 +61,16 @@ form{
 
 #forecast-display{
     border: 2px solid green;
+    height: 500px;
+    display: flex;
+    justify-content: space-around;
 }
 
 #info-display{
     border: 2px solid yellow;
+}
+
+.forecast-container{
+    
+    background-color: blue;
 }
