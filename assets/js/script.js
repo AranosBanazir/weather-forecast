@@ -5,7 +5,7 @@ let cityInfo;
 const searchHistoryList = []
 const storedHistory = JSON.parse(localStorage.getItem('search-history')) || []
 let selectedCity;
-
+let dayList = []
 //TODO process all functions
 
 //TODO function to convert city name to coords and then call
@@ -30,14 +30,15 @@ async function fetchCityInfo(city) {
 
 //TODO Fetch data on requested city
 async function fetchWeather(lat, lon) {
-  try {
+    
+  
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apikey}`
     );
     // const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?lat=43.4704014&lon=-89.7437844&appid=607b09751fe2e09adc4ef5a58f66622d')
     const data = await response.json();
-
-    let count = 0;
+        
+    
 
     const currentCity = {
       name: data.city.name,
@@ -47,29 +48,35 @@ async function fetchWeather(lat, lon) {
       temp: Math.floor((data.list[0].main.temp - 273.15) * 1.8 + 32) + "°F",
       wind: data.list[0].wind.speed + " MPH",
     };
+
     let confirmedDay = 1;
+  
     for (let i = 0; i < data.list.length; i++) {
-      if (data.list[i].dt_txt.match("00:00:00")) {
+        
+        //making sure we track each new day the forecast gives us
+        if (!dayList.includes(data.list[i].dt_txt.replace(/\s\d+:\d+:\d+/g, ''))){
         currentCity.forecast[`day${confirmedDay}`] = [
           {
-            temp:
-              Math.floor((data.list[i].main.temp - 273.15) * 1.8 + 32) + "°F",
+            temp: Math.floor((data.list[i].main.temp - 273.15) * 1.8 + 32) + "°F",
             humidity: data.list[i].main.humidity + " %",
             wind: data.list[i].wind.speed + " MPH",
             icon: data.list[i].weather[0].icon,
-            date: data.list[i].dt_txt.replace(" 00:00:00", ""),
+            date: data.list[i].dt_txt.replace(/\s\d+:\d+:\d+/g, ''),
           },
         ];
-
+       
+        dayList.push(data.list[i].dt_txt.replace(/\s\d+:\d+:\d+/g, ''))
+       
         confirmedDay++;
       }
+
     }
+   //clearing the list of tracked days
+    dayList = []
     cityInfo = currentCity;
     displayForecast();
-  } catch {
-    // throw new Error(`Unable to fetch information for: CITY NAME`)
-  }
 }
+
 
 //TODO Function to display information over the 5 days
 
@@ -116,6 +123,9 @@ function displayForecast() {
 
   for (const info in cityInfo.forecast) {
     for (const weather of cityInfo.forecast[info]) {
+        if (info == 'day1'){
+
+        }else{
       //make the elements for each day
       const infoPannel = document.createElement("div");
       const date = document.createElement("h2");
@@ -148,6 +158,7 @@ function displayForecast() {
       temp.textContent = "Temp: " + weather.temp;
       wind.textContent = "Wind: " + weather.wind;
       humidity.textContent = "Humidity: " + weather.humidity;
+    }
     }
   }
 }
@@ -219,6 +230,7 @@ btn.addEventListener('click', function(e){
     e.preventDefault()
     fetchCityInfo(city)
     addSearchHistory(city)
+    document.querySelector('input').textContent = ''
     }
 })
 
