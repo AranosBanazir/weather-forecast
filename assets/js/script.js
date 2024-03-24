@@ -15,7 +15,7 @@ async function fetchCityInfo(city) {
     selectedCity = city
   try {
     const response = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=${1}&appid=${apikey}`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=${1}&appid=${apikey}`
     );
 
     const data = await response.json();
