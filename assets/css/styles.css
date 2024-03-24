@@ -99,6 +99,7 @@ form label{
     border: 1px solid black;
     margin-top: 20px;
     margin-right: 20px;
+    font-weight: bold;
 }
 
 .forecast-container{
@@ -121,15 +122,11 @@ form label{
     align-self: center;
 }
 
-#info-display{
-    height: 30%;
-    font-size: larger;
-    font-weight: bold;
-}
 
 .flex-container{
     display: flex;
     flex-direction: row;
+    margin-bottom: 0;
     
 }
 
