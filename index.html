@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>5 day weather forecast</title>
+    <title>Weather Dashboard</title>
 </head>
 <body>
-    <header>Weather Dashboard</header>
+    <header><h1>Weather Dashboard</h1></header>
     <div id="main-container">
         <section id="search-div">
             <form>
                 <label for="city-input">Search for a City:</label>
-                <input value = 'chicago' id="city-input" name = 'city-input' type="text">
+                <input  id="city-input" name = 'city-input' type="text">
                 <button id="search-btn">Search</button>
             </form>
             <div class="spacer"></div>
@@ -22,11 +22,13 @@
             <section id="info-display">
 
             </section>
+            <h2>5 day forecast:</h2>
             <section id="forecast-display">
 
             </section>
         </div>
     </div>
     <script src="./assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"></script>
 </body>
 </html>
