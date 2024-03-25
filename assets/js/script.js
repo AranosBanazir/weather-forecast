@@ -108,6 +108,9 @@ function displayForecast() {
   city.classList.add('temp')
   cityDate.classList.add('temp')
   cityIcon.classList.add('temp')
+  city.classList.add('city-name')
+  cityDate.classList.add('city-date')
+  cityIcon.classList.add('city-icon')
   cityWind.classList.add('temp')
   cityHumidity.classList.add('temp')
   cityTemp.classList.add('temp')
@@ -115,7 +118,7 @@ function displayForecast() {
   cityDate.textContent = `(${dayjs(today.date).$M}/${dayjs(today.date).$D}/${
     dayjs(today.date).$y
   })`;
-  cityIcon.src = `https://openweathermap.org/img/wn/${today.icon}@2x.png`;
+  cityIcon.src = `https://openweathermap.org/img/wn/${(today.icon.replace('n', 'd') || today.icon)}@2x.png`;
   cityTemp.textContent = "Temp: " + today.temp;
   cityWind.textContent = "Wind: " + today.wind;
   cityHumidity.textContent = "Humidity: " + today.humidity;
