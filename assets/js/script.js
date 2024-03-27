@@ -82,85 +82,60 @@ async function fetchWeather(lat, lon) {
 
 function displayForecast() {
   const today = cityInfo.forecast.day1[0];
-  const forecastContainer = document.querySelector("#forecast-display");
-  const currentDayDisplay = document.querySelector("#info-display");
+
+  const $forecastContainer = $("#forecast-display");
+  const $currentDayDisplay = $("#info-display");
+
+
+
+  
+
 
   //set information for upper box
-  const cityInfoDiv = document.createElement("div");
-  const city = document.createElement("h2");
-  const cityDate = document.createElement("h2");
-  const cityIcon = document.createElement("img");
+  const $cityInfoDiv = $('<div>')
+  const $city = $('<h2>')
+  const $cityDate = $('<h2>')
+  const $cityIcon = $('<img>')
 
-  const cityTemp = document.createElement("p");
-  const cityWind = document.createElement("p");
-  const cityHumidity = document.createElement("p");
+  const $cityTemp = $('<p>')
+  const $cityWind = $('<p>')
+  const $cityHumidity = $('<p>')
 
-  currentDayDisplay.appendChild(cityInfoDiv);
-  cityInfoDiv.appendChild(city);
-  cityInfoDiv.appendChild(cityDate);
-  cityInfoDiv.appendChild(cityIcon);
 
-  currentDayDisplay.appendChild(cityTemp);
-  currentDayDisplay.appendChild(cityWind);
-  currentDayDisplay.appendChild(cityHumidity);
+  $cityInfoDiv.appendTo($currentDayDisplay).addClass('flex-container')
+  $city.addClass('temp').text(cityInfo.name).appendTo($cityInfoDiv)
+  $cityDate.addClass('temp').text(`(${dayjs(today.date).$M}/${dayjs(today.date).$D}/${dayjs(today.date).$y})`).appendTo($cityInfoDiv)
+  $cityIcon.addClass('temp').attr('src', `https://openweathermap.org/img/wn/${(today.icon.replace('n', 'd') || today.icon)}@2x.png`).appendTo($cityInfoDiv)
 
-  cityInfoDiv.classList.add("flex-container", 'temp');
-  city.classList.add('temp')
-  cityDate.classList.add('temp')
-  cityIcon.classList.add('temp')
-  city.classList.add('city-name')
-  cityDate.classList.add('city-date')
-  cityIcon.classList.add('city-icon')
-  cityWind.classList.add('temp')
-  cityHumidity.classList.add('temp')
-  cityTemp.classList.add('temp')
-  //setting data
-  cityDate.textContent = `(${dayjs(today.date).$M}/${dayjs(today.date).$D}/${
-    dayjs(today.date).$y
-  })`;
-  cityIcon.src = `https://openweathermap.org/img/wn/${(today.icon.replace('n', 'd') || today.icon)}@2x.png`;
-  cityTemp.textContent = "Temp: " + today.temp;
-  cityWind.textContent = "Wind: " + today.wind;
-  cityHumidity.textContent = "Humidity: " + today.humidity;
-  city.textContent = cityInfo.name;
+  $cityTemp.addClass('temp').text("Temp: " + today.temp).appendTo($currentDayDisplay)
+  $cityWind.addClass('temp').text("Wind: " + today.wind).appendTo($currentDayDisplay)
+  $cityHumidity.addClass('temp').text("Humidity: " + today.humidity).appendTo($currentDayDisplay)
+
+
 
   for (const info in cityInfo.forecast) {
     for (const weather of cityInfo.forecast[info]) {
         if (info == 'day1'){
 
         }else{
+
       //make the elements for each day
-      const infoPannel = document.createElement("div");
-      const date = document.createElement("h2");
-      const icon = document.createElement("img");
-      const temp = document.createElement("p");
-      const wind = document.createElement("p");
-      const humidity = document.createElement("p");
+        const $infoPannel = $("<div>");
+        const $date = $("<h2>");
+        const $icon = $("<img>");
+        const $temp = $("<p>");
+        const $wind = $("<p>");
+        const $humidity = $("<p>");
 
-      infoPannel.classList.add("forecast-container", 'temp');
-      date.classList.add("forecast-header", 'temp');
-      icon.classList.add("forecast-icon", 'temp');
-      temp.classList.add("forecast-txt", 'temp');
-      wind.classList.add("forecast-txt", 'temp');
-      humidity.classList.add("forecast-txt", 'temp');
+        $infoPannel.addClass('forecast-container temp').appendTo($forecastContainer)
+        $date.addClass('forecast-header temp').appendTo($infoPannel).text(`${dayjs(weather.date).$M}/${dayjs(weather.date).$D}/${dayjs(weather.date).$y}`)
+        $icon.addClass('forecast-icon temp').appendTo($infoPannel).attr('src', `https://openweathermap.org/img/wn/${weather.icon}@2x.png`)
+        $temp.addClass('forecast-txt temp').appendTo($infoPannel).text("Temp: " + weather.temp)
+        $wind.addClass('forecast-txt temp').appendTo($infoPannel).text("Wind: " + weather.wind)
+        $humidity.addClass('forecast-txt temp').appendTo($infoPannel).text("Humidity: " + weather.humidity)
 
-      //append new elements to container
-      forecastContainer.appendChild(infoPannel);
-      infoPannel.appendChild(date);
-      infoPannel.appendChild(icon);
-      infoPannel.appendChild(temp);
-      infoPannel.appendChild(wind);
-      infoPannel.appendChild(humidity);
+      
 
-      //set the values of the new elements
-
-      date.textContent = `${dayjs(weather.date).$M}/${dayjs(weather.date).$D}/${
-        dayjs(weather.date).$y
-      }`;
-      icon.src = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;
-      temp.textContent = "Temp: " + weather.temp;
-      wind.textContent = "Wind: " + weather.wind;
-      humidity.textContent = "Humidity: " + weather.humidity;
     }
     }
   }
@@ -169,21 +144,19 @@ function displayForecast() {
 //Create a search history with functionality to re-display the info
 function addSearchHistory(city) {
     const tempHistory = JSON.parse(localStorage.getItem('search-history')) || []
-    const searchHistory = document.querySelector('#search-div')
-    const newSearch = document.createElement('div')
-    const newSearchTxt = document.createElement('p')
+
+    const $searchHistory = $('#search-history')
+    const $newSearch = $('<div>')
+    const $newSearchTxt = $('<p>')
     const fixedCity = city.replace(' ', '-')
     
     if (searchHistoryList.includes(city)){
 
     }else{
         searchHistoryList.push(city)
-        searchHistory.appendChild(newSearch)
-        newSearch.appendChild(newSearchTxt)
-        newSearch.classList.add('search-history')
-        newSearch.id = `${fixedCity}-history`
-        newSearchTxt.textContent = city.toUpperCase()
-        addListenerForSeachHistory(newSearch)
+        $newSearch.appendTo($searchHistory).addClass('search-history').attr('id', `${fixedCity}-history`)
+        $newSearchTxt.appendTo($newSearch).text(city.toUpperCase())
+    
 
     }
     
@@ -211,13 +184,13 @@ function renderSearchHistory() {
 
 
 //add a click listner for each search history box
-function addListenerForSeachHistory(btn){
-    
-    btn.addEventListener('click', function(e){
-        const city = e.target.firstChild.textContent.toLowerCase()
+function handleSearchHistory(e){
+   clearDisplay()
+      
+        const city = e.target.textContent.toLowerCase()
         fetchCityInfo(city)
       
-    })
+  
     
 }
 
@@ -250,3 +223,5 @@ function clearDisplay(){
 
 fetchCityInfo((storedHistory[0]|| 'milwaukee'))
 renderSearchHistory()
+
+$('#search-history').on('click', handleSearchHistory)
