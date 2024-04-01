@@ -233,7 +233,7 @@ btn.addEventListener('click', function(e){
     e.preventDefault()
     fetchCityInfo(city)
     addSearchHistory(city)
-    document.querySelector('input').textContent = ''
+    document.querySelector('input').value = ''
     }
 })
 
