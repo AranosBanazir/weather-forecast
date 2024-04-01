@@ -2,7 +2,7 @@
 
 ## Description
 
-This Weather Dashboard provides a simple to use five day forecast for a specified city. Being able to see expected weather conditions such as temperature, humidity, wind speeds and expected weather conditions helps users to plan for trips, events, and much more by getting accurate climate information from [Open Weather Map]('https://openweathermap.org/'). To learn more about Open Weather Map you can see their contributions in our [Credits](#credits) section.
+This Weather Dashboard provides a simple to use five day forecast for a specified city. Being able to see expected weather conditions such as temperature, humidity, wind speeds and expected weather conditions helps users to plan for trips, events, and much more by getting accurate climate information from <a href = 'https://openweathermap.org/'>Open Weather Map</a>. To learn more about Open Weather Map you can see their contributions in our [Credits](#credits) section.
 
 
 ## Installation
@@ -22,5 +22,5 @@ After entering a city name, you will see it appear below the search bar as track
 Information on previously searched cities will remain stored in the browser between sessions allowing for quick access to a citys forecast.
 
 ## Credits
-A special thanks to [Open Weather Map]('https://openweathermap.org/') who provided access to their API which allowed us to present the gathered weather information.
+A special thanks to <a href = 'https://openweathermap.org/'>Open Weather Map</a> who provided access to their API which allowed us to present the gathered weather information.
 
