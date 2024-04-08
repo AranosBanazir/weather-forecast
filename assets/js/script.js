@@ -1,6 +1,4 @@
 const apikey = "607b09751fe2e09adc4ef5a58f66622d";
-let lat;
-let lon;
 let cityInfo;
 const searchHistoryList = []
 const storedHistory = JSON.parse(localStorage.getItem('search-history')) || []
